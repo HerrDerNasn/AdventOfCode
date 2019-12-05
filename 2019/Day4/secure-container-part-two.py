@@ -65,7 +65,6 @@ def count_valid_passwords():
             count += 1
             valid.append(bottom_digits.copy())
         bottom_digits = increment_digits(bottom_digits)
-    print(valid)
     return count
 
 
