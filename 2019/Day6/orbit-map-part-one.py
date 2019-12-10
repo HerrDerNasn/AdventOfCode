@@ -33,10 +33,7 @@ def get_route_to_root(node_tree, start):
 
 
 def find_route_to_san(node_tree, start, target):
-    route = set(get_route_to_root(node_tree, start)) ^ set(get_route_to_root(node_tree, target))
-    route.remove(start)
-    route.remove(target)
-    return len(route)
+    return len(set(get_route_to_root(node_tree, start)) ^ set(get_route_to_root(node_tree, target)) ^ {start, target})
 
 
 def main():
