@@ -10,7 +10,7 @@ def read_input():
 
 
 def calc_fuel(mass):
-    return int(mass/3)-2
+    return int(mass / 3) - 2
 
 
 def extra_fuel(fuel):
@@ -27,12 +27,15 @@ def extra_fuel(fuel):
 
 def main():
     nums = read_input()
-    count = 0
+    p1_count = 0
+    p2_count = 0
     for num in nums:
-        fuel = calc_fuel(num)
-        fuel = extra_fuel(fuel)
-        count = count + fuel
-    print(count)
+        base_fuel = calc_fuel(num)
+        bonus_fuel = extra_fuel(base_fuel)
+        p1_count = p1_count + base_fuel
+        p2_count = p2_count + bonus_fuel
+    print("Part 1: " + str(p1_count))
+    print("Part 2: " + str(p2_count))
 
 
 if __name__ == "__main__":
