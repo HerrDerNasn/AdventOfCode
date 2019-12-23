@@ -130,17 +130,35 @@ op_fn = {
 }
 
 
-def run(numbers, inputs, position, input_position):
-    global gNumbers, gInputs, gCurrPos, gCurrInput, gRelativeBase
+def init(numbers, inputs, position, input_position):
+    global gNumbers, gInputs, gCurrPos, gCurrInput, gRelativeBase, gOutputs
     gNumbers = numbers.copy()
     gInputs = inputs.copy()
     gCurrPos = position
     gCurrInput = input_position
+    gOutputs = []
     gRelativeBase = 0
-    return run_internal()
 
 
-def run_internal():
+def update(inputs, position, input_position):
+    global gInputs, gCurrPos, gCurrInput, gOutputs
+    gInputs = inputs
+    gCurrPos = position
+    gCurrInput = input_position
+    gOutputs = []
+
+
+def add_inputs(new_inputs):
+    global gInputs
+    gInputs += new_inputs
+
+
+def run(numbers, inputs, position, input_position):
+    init(numbers, inputs, position, input_position)
+    return run_code()
+
+
+def run_code():
     global gCurrPos, gNumbers, gCurrInput, gInputs
     op_code, modifier = get_op_code()
     while op_code != 99:
