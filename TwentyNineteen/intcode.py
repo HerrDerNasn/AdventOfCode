@@ -130,14 +130,14 @@ op_fn = {
 }
 
 
-def init(numbers, inputs, position, input_position):
+def init(numbers, inputs, position, input_position, relative_base):
     global gNumbers, gInputs, gCurrPos, gCurrInput, gRelativeBase, gOutputs
     gNumbers = numbers.copy()
     gInputs = inputs.copy()
     gCurrPos = position
     gCurrInput = input_position
     gOutputs = []
-    gRelativeBase = 0
+    gRelativeBase = relative_base
 
 
 def update(inputs, position, input_position):
@@ -153,13 +153,13 @@ def add_inputs(new_inputs):
     gInputs += new_inputs
 
 
-def run(numbers, inputs, position, input_position):
-    init(numbers, inputs, position, input_position)
+def run(numbers, inputs, position, input_position, relative_base):
+    init(numbers, inputs, position, input_position, relative_base)
     return run_code()
 
 
 def run_code():
-    global gCurrPos, gNumbers, gCurrInput, gInputs
+    global gCurrPos, gNumbers, gCurrInput, gInputs, gRelativeBase
     op_code, modifier = get_op_code()
     while op_code != 99:
         if op_code in split_length.keys():
@@ -167,9 +167,9 @@ def run_code():
                 curr_block = gNumbers[gCurrPos + 1: gCurrPos + split_length[op_code]]
                 gCurrPos = op_fn[op_code](curr_block, modifier)
             except IntcodeException as error:
-                return gNumbers, gInputs, gCurrPos, gCurrInput, gOutputs
+                return gNumbers, gInputs, gCurrPos, gCurrInput, gOutputs, gRelativeBase
         op_code, modifier = get_op_code()
-    return gNumbers, gInputs, gCurrPos, gCurrInput, gOutputs
+    return gNumbers, gInputs, gCurrPos, gCurrInput, gOutputs, gRelativeBase
 
 
 def get_op_code():

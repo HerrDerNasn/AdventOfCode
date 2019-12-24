@@ -39,14 +39,12 @@ with open('input.txt', 'r') as file:
         state = intcode.run_code()
         blocks = [state[4][x:x+3] for x in range(0, len(state[4]), 3)]
         ball_blocks = list(filter(lambda x: x[2] == 4, blocks))
-        ball_range = list(map(lambda x: x[0], ball_blocks))
         paddle_blocks = list(filter(lambda x: x[2] == 3, blocks))
-        paddle_range = list(map(lambda x: x[0], paddle_blocks))
         joystick = 0
-        if max(paddle_range) < min(ball_range):
-            joystick = -1
-        elif min(paddle_range) > max(ball_range):
+        if paddle_blocks[-1][0] < ball_blocks[-1][0]:
             joystick = 1
+        elif paddle_blocks[-1][0] > ball_blocks[-1][0]:
+            joystick = -1
         intcode.update([joystick], 0, 0)
         finished = not any(block[2] == 2 for block in blocks)
         print_play_field(blocks)
